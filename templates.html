@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bedtime Story Generator</title>
+  </head>
+  <body>
+    <h1>Bedtime Story Generator</h1>
+    <form id="story-form">
+      <label for="genre-input">Genre:</label>
+      <input type="text" id="genre-input" name="genre">
+      <br>
+      <label for="character-input">Main character:</label>
+      <input type="text" id="character-input" name="character">
+      <br>
+      <label for="age-group-input">Age group:</label>
+      <input type="text" id="age-group-input" name="age_group">
+      <br>
+      <label for="word-count-input">Word count:</label>
+      <input type="text" id="word-count-input" name="word_count">
+      <br>
+      <button type="submit">Generate Story</button>
+    </form>
+    <div id="story-output"></div>
+    <script>
+      const form = document.getElementById('story-form');
+      const output = document.getElementById('story-output');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const response = await fetch('/generate-story', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        output.innerText = data.story;
+      });
+    </script>
+  </body>
+</html>
